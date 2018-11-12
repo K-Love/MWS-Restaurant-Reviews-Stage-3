@@ -164,3 +164,137 @@ getParameterByName = (name, url) => {
     return '';
   return decodeURIComponent(results[2].replace(/\+/g, ' '));
 }
+
+
+
+
+
+
+
+
+// Add new review button
+const form = document.getElementById('new-review-form');
+form.addEventListener('add', newReview, false);
+
+var focusableElementsString = 'a[href], area[href], input:not([disabled]),' +
+  'select:not([disabled]), textarea:not([disabled]), button:not([disabled]),' + 
+  'iframe, object, embed, [tabindex="0"], [contenteditable]';
+
+// Convert NodeList to Array
+focusElements = Array.prototype.slice.call(focusElements);
+
+var firstTabStop = focusElements[0];
+var lastTabStop = focusElements[focusElements.length - 1];
+
+// Focus first child
+// firstTabStop.focus();
+const reviewer = document.getElementById('reviewer');
+reviewer.focus();
+
+function trapTab(e) {
+  if (e.keyCode === 9) {
+
+    if (e.shiftKey) {
+      if (document.activeElement === firstTabStop) {
+        e.preventDefault();
+        lastTabStop.focus();
+      }
+
+    } else {
+      if (document.activeElement === lastTabStop) {
+        e.preventDefault();
+        firstTabStop.focus();
+      }
+    }
+  }
+
+const newReview = (e) => {
+e.preventDefault();
+
+const name = document.querySelector('#reviewer').value;
+const rating = document.querySelector('input[name=rate]:checked').value;
+const comments = document.querySelector('#restaurant-comments').value;
+
+DBHelper.newRestaurantReview(self.restaurant.id, name, rating, comments,
+  (error, review) => {
+  console.log('callback');
+  if (error) {
+    console.log('Error adding review');
+  } else {
+    console.log(review);
+    window.location.href = `/restaurant.html?id=${self.restaurant.id}`;
+  }
+});
+};
+
+const setFocus = (evt) => {
+const rateRadios = document.getElementsByName('rating');
+const rateRadiosArr = Array.from(ratingRadios);
+const anyChecked = ratingRadiosArr.some(radio => { 
+  return radio.checked === true; 
+});
+if (!anyChecked) {
+  const oneStar = document.getElementById('oneStar');
+  oneStar.focus();
+}
+};
+
+const navRadio = (evt) => {
+const oneStar = document.getElementById('oneStar');  
+const twoStars = document.getElementById('twoStars');  
+const threeStars = document.getElementById('threeStars');  
+const fourStars = document.getElementById('fourStars');  
+const fiveStars = document.getElementById('fiveStars');  
+
+if (['ArrowRight', 'ArrowLeft', 'ArrowDown', 'ArrowUp'].includes(evt.key)) {
+  evt.preventDefault();
+  // console.log('attempting return');
+  if (evt.key === 'ArrowRight' || evt.key === 'ArrowDown') {
+    switch(evt.target.id) {
+      case 'oneStar':
+        star2.focus();
+        star2.checked = true;
+        break;
+      case 'twoStars':
+        star3.focus();
+        star3.checked = true;
+        break;
+      case 'threeStars':
+        star4.focus();
+        star4.checked = true;
+        break;
+      case 'fourStars':
+        star5.focus();
+        star5.checked = true;
+        break;
+      case 'fiveStars':
+        star1.focus();
+        star1.checked = true;
+        break;
+    }
+  } else if (evt.key === 'ArrowLeft' || evt.key === 'ArrowUp') {
+    switch(evt.target.id) {
+      case 'oneStar':
+        star5.focus();
+        star5.checked = true;
+        break;
+      case 'twoStars':
+        star1.focus();
+        star1.checked = true;
+        break;
+      case 'threeStars':
+        star2.focus();
+        star2.checked = true;
+        break;
+      case 'fourStars':
+        star3.focus();
+        star3.checked = true;
+        break;
+      case 'fiveStars':
+        star4.focus();
+        star4.checked = true;
+        break;
+    }
+  }
+}
+};
