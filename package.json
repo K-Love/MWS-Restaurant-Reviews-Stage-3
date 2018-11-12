@@ -1,0 +1,20 @@
+{
+  "name": "mws-restaurant-reviews",
+  "version": "2.0.0",
+  "description": "Mobile Web Specialist Restaurant Reviews app stage 2",
+  "main": "sw.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp": "^4.0.0",
+    "gulp-autoprefixer": "^6.0.0"
+  },
+  "dependencies": {
+    "browser-sync": "^2.26.3",
+    "gulp-sass": "^4.0.2",
+    "idb": "^2.1.3"
+  }
+}
