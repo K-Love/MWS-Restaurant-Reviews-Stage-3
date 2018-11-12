@@ -390,6 +390,7 @@ form {
   max-width: 900px;
   padding: 0 20px 20px 20px;
 }
+
 input, select, .rating, textarea, button {
   background: #f9f9f9;
   border: 1px solid #e5e5e5;
@@ -398,17 +399,21 @@ input, select, .rating, textarea, button {
   font-size: 16px;
   padding: 8px;
 }
+
 input[type="radio"] {
   box-shadow: none;
 }
+
 button {
   min-width: 48px;
   min-height: 48px;
 }
+
 button:hover {
   border: 1px solid #ccc;
   background-color: #fff;
 }
+
 #add-review-btn {
   font-weight: bold;
   cursor: pointer;
@@ -419,10 +424,6 @@ button:hover {
 .fields {
   margin-top: 24px;
 }
-
-/* .right {
-  align-self: flex-end;
-} */
 
 #new-review-container {
   width: 100%;
