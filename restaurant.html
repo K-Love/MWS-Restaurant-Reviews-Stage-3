@@ -50,6 +50,47 @@
     </section>
     <!-- End reviews -->
 
+    <!-- Review form -->
+<section id="new-review-container">
+  <h2 id="new-review-heading">New Review</h2>
+  <form id="new-review-form">
+    <section class="fields">
+      <label for="reviewer">Name</label>
+      <input type="text" name="reviewer" id="reviewer" required>
+    </section>
+    <section class="fields">
+      <label>Rating</label>
+      <div class="rating">
+        <input type="radio" id="five-stars" name="rating" value="5"
+          onkeydown="navRadioGroup(event)"
+          onfocus="setFocus(event)" required />
+        <label for="five-stars" title="5 stars">5 stars</label>
+        <input type="radio" id="four-stars" name="rating" value="4"
+          onkeydown="navRadioGroup(event)" />
+        <label for="four-stars" title="4 stars">4 stars</label>
+        <input type="radio" id="three-stars" name="rating" value="3"
+          onkeydown="navRadioGroup(event)" />
+        <label for="three-stars" title="3 stars">3 stars</label>
+        <input type="radio" id="two-stars" name="rating" value="2"
+          onkeydown="navRadioGroup(event)" />
+        <label for="two-stars" title="2 stars">2 stars</label>
+        <input type="radio" id="one-star" name="rating" value="1"
+          onkeydown="navRadioGroup(event)" onfocus="setFocus(event)" />
+        <label for="ones-star" title="1 star">1 star</label>
+      </section>
+    </section>
+    <section class="fields">
+      <label for="restaurant-comments">Comments</label>
+      <textarea name="restaurant-comments" id="restaurant-comments"
+        cols="30" rows="10" required></textarea>
+    </section>
+    <section class="fields right">
+      <button id="add-review-btn">Add Review</button>
+    </section>
+  </form>
+</section>
+<!-- End review form -->
+
   </main>
   <!-- End main -->
 
