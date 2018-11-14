@@ -298,3 +298,67 @@ if (['ArrowRight', 'ArrowLeft', 'ArrowDown', 'ArrowUp'].includes(evt.key)) {
   }
 }
 };
+
+const saveAddReview = (e) => {
+  e.preventDefault();
+  const form = e.target;
+
+  if (form.checkValidity()) {
+    console.log('is valid');
+
+    const restaurant_id = self.restaurant.id;
+    const name = document.querySelector('#reviewer').value;
+    const rating = document.querySelector('input[name=rate]:checked').value;
+    const comments = document.querySelector('#reviewComments').value;
+  
+    // attempt save to database server
+    DBHelper.createRestaurantReview(restaurant_id, name, rating, comments,
+      (error, review) => {
+      console.log('got callback');
+      form.reset();
+      if (error) {
+        console.log('We are offline. Review has been saved to the queue.');
+        window.location.href =
+          `/restaurant.html?id=${self.restaurant.id}&isOffline=true`;
+      } else {
+        console.log('Received updated record from DB Server', review);
+        DBHelper.createIDBReview(review); // write record to local IDB store
+        window.location.href = `/restaurant.html?id=${self.restaurant.id}`;
+      }
+    });
+  }
+};
+
+static buildReview(restaurant_id, name, rating, comments, callback) {
+  const url = DBHelper.DATABASE_URL + '/reviews/';
+  const headers = { 'Content-Type': 'application/form-data' };
+  const method = 'POST';
+  const data = {
+    restaurant_id: restaurant_id,
+    name: name,
+    rating: +rating,
+    comments: comments
+  };
+  const body = JSON.stringify(data);
+  // const body = data;
+
+  fetch(url, {
+    headers: headers,
+    method: method,
+    body: body
+  })
+    .then(response => response.json())
+    .then(data => callback(null, data))
+    .catch(err => {
+      // We are offline...
+      // Save review to local IDB
+      DBHelper.buildReview(data)
+        .then(review_key => {
+          // Get review_key and save it with review to offline queue
+          console.log('returned review_key', review_key);
+          DBHelper.addRequestToQueue(url, headers, method, data, review_key)
+            .then(offline_key => console.log('offline_key', offline_key));
+        });
+      callback(err, null);
+    });
+}

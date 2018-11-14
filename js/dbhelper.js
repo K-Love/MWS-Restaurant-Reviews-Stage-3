@@ -196,3 +196,84 @@ static newRestaurantReview(id, name, rating, comments, callback) {
     .then(data => callback(null, restaurantData))
     .catch(err => callback(err, null));
 }
+
+const dbPromise = idb.open('restaurant-db', 2, upgradeDB => {
+  switch (upgradeDB.oldVersion) {
+    case 0:
+      upgradeDB.createObjectStore('restaurants',
+        { keyPath: 'id', unique: true });
+    case 1:
+      const reviewStore = upgradeDB.createObjectStore('reviews',
+        { autoIncrement: true });
+      reviewStore.createIndex('restaurant_id', 'restaurant_id');
+  }
+});
+
+const idbKeyValue = {
+  get...
+  getAll...
+  getAllIdx(store, idx, key) {
+    return dbPromise.then(db => {
+      return db
+        .transaction(store)
+        .objectStore(store)
+        .index(idx)
+        .getAll(key);
+    });
+  },
+  set...
+}
+
+static buildReview(restaurant_id, name, rating, comments, callback) {
+  const url = DBHelper.DATABASE_URL + '/reviews/';
+  const headers = { 'Content-Type': 'application/form-data' };
+  const method = 'POST';
+  const data = {
+    restaurant_id: restaurant_id,
+    name: name,
+    rating: +rating,
+    comments: comments
+  };
+  const body = JSON.stringify(data);
+  // const body = data;
+
+  fetch(url, {
+    headers: headers,
+    method: method,
+    body: body
+  })
+    .then(response => response.json())
+    .then(data => callback(null, data))
+    .catch(err => {
+      DBHelper.buildReview(data)
+        .then(review_key => {
+          console.log('review_key', review_key);
+          DBHelper.addRequestToQueue(url, headers, method, data, review_key)
+            .then(offline_key => console.log('offline_key', offline_key));
+        });
+      callback(err, null);
+    });
+}
+
+static buildReview(review) {
+  return idbKeyVal.setReturnId('reviews', review)
+    .then(id => {
+      console.log('Created on Reviews', review);
+      return id;
+    });
+}
+
+static addRequest(url, headers, method, data, review_key) {
+  const request = {
+    url: url,
+    headers: headers,
+    method: method,
+    data: data,
+    review_key: review_key
+  };
+  return idbKeyVal.setReturnId('offline', request)
+    .then(id => {
+      console.log('Saved offline', request);
+      return id;
+    });
+}

@@ -58,9 +58,14 @@ self.addEventListener('install', event => {
 self.addEventListener('fetch', event => {
   const request = event.request;
   const requestUrl = new URL(request.url);
-
+  
   if (requestUrl.port === '1337') {
-    event.respondWith(indexedDbResponse(request));
+    if (request.url.includes('reviews')) {                    
+      let id = +requestUrl.searchParams.get('restaurant_id'); 
+      event.respondWith(idbReviewResponse(request, id));      
+    } else {                                                  
+      event.respondWith(idbRestaurantResponse(request));
+    }
   }
   else {
     event.respondWith(cacheResponse(request));
@@ -119,3 +124,29 @@ self.addEventListener('activate', event => {
     })
   );
 });
+
+let k = 0;
+function idbReviewsResponse(request, id) {
+  return idbKeyValue.getAllIdx('reviews', 'restaurant_id', id)
+    .then(reviews => {
+      if (reviews.length) {
+        return reviews;
+      }
+      return fetch(request)
+        .then(response => response.json())
+        .then(json => {
+          json.forEach(review => {
+            console.log('fetch idb review write', ++k, review.id, review.name);
+            idbKeyValue.set('reviews', review);
+          });
+          return json;
+        });
+    })
+    .then(response => new Response(JSON.stringify(response)))
+    .catch(error => {
+      return new Response(error, {
+        status: 404,
+        statusText: 'invalid request'
+      });
+    });
+}
