@@ -429,11 +429,11 @@ button:hover {
   width: 100%;
   padding: 0 20px 26px;
   color: #999;
-  /* overflow-y: auto; */
+  display: inline;
 }
 
 #new-review-container h2 {
-  margin: 0 0 0 6px;
+  text-align: center;
 }
 
 #new-review-form {
@@ -442,6 +442,7 @@ button:hover {
   background: #fff;
   border: 1px solid #e5e5e5;
   border-radius: 4px;
+  margin: auto;
 }
 #new-review-form label, #new-review-form input {
   display: block;
@@ -456,11 +457,11 @@ button:hover {
 }
 
 .rating {
-  height: 38px;
   display: inline-flex;
   flex-direction: row-reverse;
   align-items: flex-start;
   justify-content: flex-end;
+  padding-top: 16px;
 }
 #new-review-form .rating > label {
   margin-bottom: 0;
