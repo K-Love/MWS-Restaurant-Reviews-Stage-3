@@ -31,11 +31,4 @@ gulp.task('serve:dist', ['default'], function () {
     server: 'dist',
     port: 8000
   });
-
-  gulp.watch(['/*.html'], ['html:dist', reload]);
-  gulp.watch(['css/*.css'], ['html:dist', reload]);
-  gulp.watch(['/js/*.js', '!app/js/dbhelper.js', '!app/js/idbhelper.js'], ['lint', 'html:dist', reload]);
-  gulp.watch(['/sw.js', 'app/js/idbhelper.js'], ['lint', 'sw:dist', reload]);
-  gulp.watch(['/js/dbhelper.js', 'app/js/idbhelper.js'], ['lint', 'dbhelper:dist', 'html:dist', reload]);
-  gulp.watch(['/manifest.json'], ['manifest', reload]);
 });
