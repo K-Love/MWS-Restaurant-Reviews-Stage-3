@@ -197,33 +197,6 @@ static newRestaurantReview(id, name, rating, comments, callback) {
     .catch(err => callback(err, null));
 }
 
-const dbPromise = idb.open('restaurant-db', 2, upgradeDB => {
-  switch (upgradeDB.oldVersion) {
-    case 0:
-      upgradeDB.createObjectStore('restaurants',
-        { keyPath: 'id', unique: true });
-    case 1:
-      const reviewStore = upgradeDB.createObjectStore('reviews',
-        { autoIncrement: true });
-      reviewStore.createIndex('restaurant_id', 'restaurant_id');
-  }
-});
-
-const idbKeyValue = {
-  get...
-  getAll...
-  getAllIdx(store, idx, key) {
-    return dbPromise.then(db => {
-      return db
-        .transaction(store)
-        .objectStore(store)
-        .index(idx)
-        .getAll(key);
-    });
-  },
-  set...
-}
-
 static buildReview(restaurant_id, name, rating, comments, callback) {
   const url = DBHelper.DATABASE_URL + '/reviews/';
   const headers = { 'Content-Type': 'application/form-data' };
@@ -256,7 +229,7 @@ static buildReview(restaurant_id, name, rating, comments, callback) {
 }
 
 static buildReview(review) {
-  return idbKeyVal.setReturnId('reviews', review)
+  return idbKeyValue.setReturnId('reviews', review)
     .then(id => {
       console.log('Created on Reviews', review);
       return id;
@@ -271,7 +244,7 @@ static addRequest(url, headers, method, data, review_key) {
     data: data,
     review_key: review_key
   };
-  return idbKeyVal.setReturnId('offline', request)
+  return idbKeyValue.setReturnId('offline', request)
     .then(id => {
       console.log('Saved offline', request);
       return id;
