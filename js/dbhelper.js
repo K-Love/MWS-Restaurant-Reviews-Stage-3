@@ -178,8 +178,6 @@ class DBHelper {
     return marker;
   }
 
-}
-
 static newRestaurantReview(id, name, rating, comments, callback) {
   const restaurantData = {
     'restaurant_id': id,
@@ -188,7 +186,7 @@ static newRestaurantReview(id, name, rating, comments, callback) {
     'comments': comments
   };
   fetch(DBHelper.DATABASE_URL + '/reviews/', {
-    headers: { 'Content-Type': 'application/form-data' }
+    headers: { 'Content-Type': 'application/form-data' },
     method: 'POST',
     body: JSON.stringify(restaurantData)
   })
@@ -249,7 +247,6 @@ static addRequest(url, headers, method, data, review_key) {
       console.log('Saved offline', request);
       return id;
     });
-}
 
 fetch('${DBHelper.DATABASE_URL}/restaurants/${id}/?is_favorite=true', {
   method: 'PUT'
@@ -259,5 +256,5 @@ fetch('${DBHelper.DATABASE_URL}/restaurants/${id}/?is_favorite=true', {
 static unMarkFavorite(id) {
 fetch('${DBHelper.DATABASE_URL}/restaurants/${id}/?is_favorite=false', {
   method: 'PUT'
-});
+})}
 }

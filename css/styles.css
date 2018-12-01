@@ -516,7 +516,7 @@ button:hover {
 
 /* ====================== Favorite ====================== */
 #restaurants-list .control-favorite {
-  background-color: white;
+  background-color: #f1f1f1;
   width: 44px;
   height: 40px;
   position: absolute;
@@ -526,7 +526,7 @@ button:hover {
   padding: 5px;
   border: 1px solid #999;
   border: 4px double #999;
-  background-image: url('../img/fixed/favorite5.png');
+  background-image: url('../img/favorite.png');
   background-repeat: no-repeat;
   background-position: 6px -26px;
   background-size: 24px;
@@ -555,7 +555,7 @@ button:hover {
   padding: 5px;
   border: 1px solid #999;
   border: 4px double #999;
-  background-image: url('../img/fixed/favorite5.png');
+  background-image: url('../img/favorite.png');
   background-repeat: no-repeat;
   background-position: 6px -27px;
   background-size: 24px;
