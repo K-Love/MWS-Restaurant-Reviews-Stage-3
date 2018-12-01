@@ -147,6 +147,29 @@ fillRestaurantsHTML = (restaurants = self.restaurants) => {
  * Create restaurant HTML. Convert ul to flexbox.
  */
 createRestaurantHTML = (restaurant) => {
+  const section = document.createElement('section');
+  
+    const favorite = document.createElement('button');
+    favorite.className = 'favorite-control';
+    favorite.setAttribute('aria-label', 'favorite');
+    
+    if ((/true/i).test(restaurant.is_favorite)) {
+      favorite.classList.add('active');
+      favorite.setAttribute('aria-pressed', 'true');
+      favorite.innerHTML = `Remove ${restaurant.name} as a favorite`;
+      favorite.title = `Remove ${restaurant.name} as a favorite`;
+    } else {
+      favorite.setAttribute('aria-pressed', 'false');
+      favorite.innerHTML = `Add ${restaurant.name} as a favorite`;
+      favorite.title = `Add ${restaurant.name} as a favorite`;
+    }
+  
+    favorite.addEventListener('click', (evt) => {
+      favoriteClickHandler(evt, fav, restaurant);
+    }, false);
+  
+    section.append(favorite);
+
   const div = document.createElement('div');
 
   const image = document.createElement('img');

@@ -250,3 +250,14 @@ static addRequest(url, headers, method, data, review_key) {
       return id;
     });
 }
+
+fetch('${DBHelper.DATABASE_URL}/restaurants/${id}/?is_favorite=true', {
+  method: 'PUT'
+});
+}
+
+static unMarkFavorite(id) {
+fetch('${DBHelper.DATABASE_URL}/restaurants/${id}/?is_favorite=false', {
+  method: 'PUT'
+});
+}

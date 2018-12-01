@@ -55,6 +55,32 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
   const address = document.getElementById('restaurant-address');
   address.innerHTML = restaurant.address;
 
+  const favorite = document.getElementById('favorite-restaurant');
+  if (restaurant.is_favorite === 'true') {
+    favorite.classList.add('active');
+    favorite.setAttribute('aria-pressed', 'true');
+    favorite.innerHTML = 'Remove ${restaurant.name} as a favorite';
+    favorite.title = 'Remove ${restaurant.name} as a favorite';
+  } else {
+    favorite.setAttribute('aria-pressed', 'false');
+    favorite.innerHTML = 'Add ${restaurant.name} as a favorite';
+    favorite.title = 'Add ${restaurant.name} as a favorite';
+  }
+  favorite.addEventListener('click', (evt) => {
+    evt.preventDefault();
+    if (favorite.classList.contains('active')) {
+      favorite.setAttribute('aria-pressed', 'false');
+      favorite.innerHTML = 'Add ${restaurant.name} as a favorite';
+      favorite.title = 'Add ${restaurant.name} as a favorite';
+      DBHelper.unMarkFavorite(restaurant.id);
+    } else {
+      favorite.setAttribute('aria-pressed', 'true');
+      favorite.innerHTML = 'Remove ${restaurant.name} as a favorite';
+      favorite.title = 'Remove ${restaurant.name} as a favorite';
+      DBHelper.markFavorite(restaurant.id);
+    }
+    favorite.classList.toggle('active');
+
   const image = document.getElementById('restaurant-img');
   image.className = 'restaurant-img'
   image.src = DBHelper.imageUrlForRestaurant(restaurant);

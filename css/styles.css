@@ -512,3 +512,59 @@ button:hover {
 #add-review-btn {
   align-self: flex-end;
 }
+
+
+/* ====================== Favorite ====================== */
+#restaurants-list .control-favorite {
+  background-color: white;
+  width: 44px;
+  height: 40px;
+  position: absolute;
+  align-self: flex-end;
+  margin-top: 6px;
+  margin-left: -6px;
+  padding: 5px;
+  border: 1px solid #999;
+  border: 4px double #999;
+  background-image: url('../img/fixed/favorite5.png');
+  background-repeat: no-repeat;
+  background-position: 6px -26px;
+  background-size: 24px;
+  cursor: pointer;
+  text-indent: -10000px;
+}
+#restaurants-list .control-favorite.active  {
+  background-position: 6px 5px;
+}
+#restaurants-list .control-favorite:hover {
+  background-position: 6px -59px;
+}
+
+#restaurant-img-container {
+  display: flex;
+  flex-direction: column;
+}
+#favorite-restaurant {
+  background-color: white;
+  width: 44px;
+  height: 40px;
+  position: absolute;
+  align-self: flex-end;
+  margin-top: 6px;
+  margin-left: -6px;
+  padding: 5px;
+  border: 1px solid #999;
+  border: 4px double #999;
+  background-image: url('../img/fixed/favorite5.png');
+  background-repeat: no-repeat;
+  background-position: 6px -27px;
+  background-size: 24px;
+  cursor: pointer;
+  text-indent: -10000px;
+}
+#favorite-restaurant.active {
+  background-position: 6px 5px;
+}
+#favorite-restaurant:hover {
+  background-position: 6px -59px;
+}
